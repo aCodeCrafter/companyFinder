@@ -39,30 +39,42 @@ def parse_edgar_html(text):
             for data in row.find_all('td'):
                 temp.append(get_td_tag_contents(data))
             if len(temp) > 1:
-                company_dict[temp[0]] = (temp[1], temp[2])
+                company_dict[temp[0]] = temp[1]
     return company_dict
 
-if __name__ == "__main__":
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'}
-    state_code = 'NY'
-    sic_code = '7370'
-    start = 0
+def scrape_edgar(state_code, sic_code, start_position = 0,
+                headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'}):
+    """
+    Scrapes the SEC EDGAR Database
+    Accepts:
+        state_code: State abbrieviation such as NY, CA, etc.
+        sic_code: sic code that identifies the type of company. See https://www.sec.gov/search-filings/standard-industrial-classification-sic-code-list
+        start_position: where to start the search results. Defaults to 0.
+        headers: what headers to use during web requests.
+    Returns:
+        Dictionary with the cik code as the key, and the company name as the value.
+    """
     company_dict = dict()
     while True: # do-while loop to go until there is less than 100 results
-        target_url = f"https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&SIC={sic_code}&State={state_code}&owner=exclude&match=&start={start}&count=100"
-        print(target_url)
+        target_url = f"https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&SIC={sic_code}&State={state_code}&owner=exclude&match=&start={start_position}&count=100"
         content = requests.get(target_url,headers=headers).text
         temp_dict = parse_edgar_html(content)
         company_dict.update(temp_dict)
-        print(str(len(company_dict))+" "+str(start))
-        start+=100
+        start_position+=100
         if len(temp_dict) < 100:
             break
         sleep(1)
+    return company_dict
+    
+
+if __name__ == "__main__":
+    state_code = 'NY'
+    sic_code = '7370'
+    company_dict = scrape_edgar(state_code,sic_code)
     if len(company_dict) > 0:
         print(f"Found {len(company_dict)} companies:")
         for cik in company_dict.keys():
-            print(f"  Company Name: {company_dict[cik][0]}")
+            print(f"  Company Name: {company_dict[cik]}")
             print(f"  CIK: {cik}")
             print("-" * 30)
     else:

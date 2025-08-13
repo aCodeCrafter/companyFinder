@@ -1,6 +1,7 @@
 This is a project I started in July of 2025, where I attempted to create a bot that scraped the SEC's EDGAR platform for publicly traded companies, and identify ones that are both growing and in technology fields.
 
 Output of some of the initial scraping to find the companies
+
 ```
 Found 28 companies:
   Company Name: ABOUT, INC.
@@ -21,4 +22,5 @@ Found 28 companies:
   Company Name: FARINA JOSEPH C
   CIK: 0001119835
 ```
+
 
