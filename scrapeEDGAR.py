@@ -63,7 +63,8 @@ def scrape_edgar(state_code, sic_code, start_position = 0,
         start_position+=100
         if len(temp_dict) < 100:
             break
-        sleep(1)
+        sleep(0.1)
+        print(f"Position: {start_position}")
     return company_dict
     
 

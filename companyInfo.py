@@ -5,7 +5,7 @@ import json
 import datetime
 from time import sleep
 
-def getCompanyGrossFact(cik, terms=['Revenues','RevenueFromContractWithCustomerExcludingAssessedTax']):
+def getCompanyRevenue(cik, terms=['Revenues','RevenueFromContractWithCustomerExcludingAssessedTax']):
   """
   Queries company facts on data.sec.gov to find gross profit over different quarters.
   Accepts:
@@ -56,10 +56,11 @@ def growthFinder(grossProfit):
   fullYearList = sorted(fullYearData.items())
   yearDiffs = []
   for i in range(1,len(fullYearList)):
-    yearDiffs.append((fullYearList[i][1]['val']-fullYearList[i-1][1]['val'])/fullYearList[i-1][1]['val'])
+    if (fullYearList[i-1][1]['val'] != 0):
+      yearDiffs.append((fullYearList[i][1]['val']-fullYearList[i-1][1]['val'])/fullYearList[i-1][1]['val'])
   return {"Ave YoY Growth":sum(yearDiffs)/len(yearDiffs),
           "Prev YoY Growth":(fullYearList[-1][1]['val']-fullYearList[-2][1]['val'])/fullYearList[-2][1]['val']}
 
 
 if __name__ == "__main__":
-  print(growthFinder(getCompanyGrossFact('0001652044')))
+  print(growthFinder(getCompanyRevenue('0001652044')))
