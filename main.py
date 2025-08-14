@@ -2,7 +2,7 @@ from companyInfo import growthFinder, getCompanyRevenue
 from scrapeEDGAR import scrape_edgar
 def main():
     while True:
-        state_code = input("Enter State Abbrieviation (NY, CA, etc.): ")
+        state_code = input("Enter State Abbreviation (NY, CA, etc.): ")
         sic_code = input("Enter CIK Number: ") #'7370'
         if len(sic_code) < 1 or len(state_code) < 1:
             print("Please enter State and SIC codes")
