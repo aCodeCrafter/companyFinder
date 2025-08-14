@@ -183,4 +183,4 @@ Prev YoY Growth: 10.56%
 ------------------------------
 ```
 
-This was a fun little project, and it really makes me wonder what else I could do with this data beyond prospecting potential employers. I wonder if a system like this would be useful in making a paper trading algorithm. But those are questions for another day. The code is available [on my github]() if anyone wants to check it out and try it for themselves.
+This was a fun little project, and it really makes me wonder what else I could do with this data beyond prospecting potential employers. I wonder if a system like this would be useful in making a paper trading algorithm. But those are questions for another day. The code is available [on my github](https://github.com/aCodeCrafter/companyFinder) if anyone wants to check it out and try it for themselves.
